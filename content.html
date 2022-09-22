@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="./assets/css/style.css" />
     <script src="./assets/js/script_content.js" defer></script>
+    <script src="https://ticketmaster-api-staging.github.io/products-and-docs/widgets/calendar/1.0.0/lib/main-widget.js" defer></script>
   </head>
 
   <body class ="bg-neutral-50">
@@ -66,9 +67,11 @@
         </article>
 
         <!--Events (can delete if not needed)-->
-        <article class="w-full bg-white shadow flex flex-col my-4 p-6" id="featureContainer">
-          <p class="text-xl font-semibold pb-4">Events</p>
-          <p class="text-lg">If needed..</p>
+        <article class="w-full bg-white shadow flex flex-col my-4 p-6 items-center" id="featureContainer">
+          <p class="text-xl font-semibold pb-4">Events close by</p>
+          <!--TicketMaster event widget-->
+          <div w-type="calendar" w-tmapikey="Q0bOSAYkWyuMDOGA0YqsUC1TysuxNOXJ" w-googleapikey="YOUR_GOOGLE_API_KEY" w-keyword="" w-theme="calendar" w-colorscheme="light" w-width="350" w-height="460" w-size="25" w-border="1" w-borderradius="4" w-postalcode="" w-radius="25" w-countrycode="US" w-city="Los Angeles" w-period="week" w-periodweek="week" w-layout="vertical" w-classificationid="" w-attractionid="" w-promoterid="" w-venueid="" w-affiliateid="" w-segmentid="" w-proportion="standart" w-latlong="">
+          </div>
         </article>
 
         <!--More... (links?)-->
