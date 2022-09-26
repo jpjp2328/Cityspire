@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src="./assets/js/script_home.js" defer></script>
+    <script src="./assets/js/script_home.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDazx2hF2PYMdxSCKhpndTIyThlgzfU65U&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
     <title>Travel</title>
   </head>
 
@@ -34,27 +35,29 @@
         <h2 class="text-center text-5xl text-white font-bold drop-shadow-lg">Find your dream
           <span class="text-[#bac8e0]">destination</span>
         </h2>
-        <!-- Style the 'Desinations' button with a hover -->
+        <!-- Style the 'Destinations' button with a hover -->
         <button class="mt-8 px-12 py-3 bg-gradient-to-r from-[#6a85b6] to-[#bac8e0] hover:from-[#a3bded] hover:to-[#6991c7] text-xl text-white/70 font-semibold drop-shadow-lg rounded-full">Destinations</button>
       </div>
       <!-- Create a flex with the images inside in a row -->
       <div class="flex flex-wrap w-full h-80 justify-center content-center">
         <!-- Add a hover effect to the image and disable selecting it -->
         <div class="hover:shadow-2xl w-64 select-none">
-          <img src="./assets/images/placeholder.jpg" alt="placeholder"/>
+          <img id="home-photo1" class="object-cover w-64 h-64" src="./assets/images/placeholder.jpg" alt="placeholder"/>
+          <p class="text-center"></p>
         </div>
         <!-- Add a margin on the left and right of the middle image -->
         <div class="hover:shadow-2xl w-64 select-none mx-7">
-          <img src="./assets/images/placeholder.jpg" alt="placeholder"/>
+          <img id="home-photo2" class="object-cover w-64 h-64" src="./assets/images/placeholder.jpg" alt="placeholder"/>
+          <p class="text-center"></p>
         </div>
         <div class="hover:shadow-2xl w-64 select-none">
-          <img src="./assets/images/placeholder.jpg" alt="placeholder"/>
+          <img id="home-photo3" class="object-cover w-64 h-64" src="./assets/images/placeholder.jpg" alt="placeholder"/>
+          <p class="text-center"></p>
         </div>
       </div>
     </main>
+
     <!-- Set height of the footer and center the text -->
     <footer class="h-9 flex place-content-center">&copy; travel inspo</footer>
-    
-    
   </body>
 </html>
