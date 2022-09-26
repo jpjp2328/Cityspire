@@ -8,21 +8,21 @@
     <script defer src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src="./assets/js/script_content.js" defer></script>
   </head>
 
   <body class ="bg-neutral-50">
     <!--Header containing navbar/ search bar -->
     <header class ="bg-white flex w-full justify-between items-center bg-neutral-50 pt-5 pb-3 shadow">
       <h1 class="ml-20 font-medium leading-tight text-4xl text-gray-800 mt-0 mb-2">Heading Here</h1>
-      <form class="flex mr-20 w-80">
-        <input id="city-search" class="w-full shadow border-2 text-white border-gray-400 bg-transparent rounded-full p-2 placeholder-gray-300" type="text" placeholder="I want to travel to...">
+      <form id="searchForm" class="flex mr-20 w-80">
+        <input id="city-search" class="w-full shadow border-2 text-black border-gray-400 bg-transparent rounded-full p-2 placeholder-gray-300" type="text" placeholder="I want to travel to...">
         <button class="w-auto flex justify-end items-center p-2">
           <i class="material-icons absolute text-gray-300 right-28">search</i>
         </button>
       </form>
     </header>
 
+    <!--Main Body-->
     <div class="container mx-auto flex flex-wrap py-6">
 
       <!--Main content column (left)-->
@@ -48,12 +48,22 @@
         <article class="w-full bg-white shadow flex my-4 p-6" id="weatherDash">
           <div class="flex flex-col w-full w-2/5 items-center">
             <p class="text-lg font-semibold pb-4">Time</p>
-            <div id ="currentTime"></div>
+            <div id ="currentTime">
+
+            </div>
           </div>
 
           <div class="w-full w-2/5 flex flex-wrap justify-end">
             <p class="text-lg font-semibold pb-4">Current Weather</p>
-            <div id="currentWeather"></div>
+            <div id="currentWeatherContainer">
+              <p class=""><span id="currentWeatherDate">00/00/0000</span></p>
+              <img id="currentWeatherIcon" src="" alt="Weather icon">
+              <p class="">Temp: <span id="currentWeatherTemp">00.00</span>°C</p>
+              <p class="">Wind: <span id="currentWeatherWind">00.00</span>m/s</p>
+              <p class="">Humidity: <span id="currentWeatherHumidity">00</span>%</p>
+              <p class="">UV Index: <span id="currentWeatherUV">00.00</span></p>
+            </div>
+
           </div>
 
         </article>
@@ -66,9 +76,10 @@
         </article>
 
         <!--Events (can delete if not needed)-->
-        <article class="w-full bg-white shadow flex flex-col my-4 p-6" id="featureContainer">
-          <p class="text-xl font-semibold pb-4">Events</p>
-          <p class="text-lg">If needed..</p>
+        <article class="w-full bg-white shadow flex flex-col my-4 p-6 items-center" id="eventContainer">
+          <p class="text-xl font-semibold pb-4">Events close by</p>
+          <!--TicketMaster event widget-->
+          <div id="eventWidget" w-type="event-discovery" w-tmapikey="Q0bOSAYkWyuMDOGA0YqsUC1TysuxNOXJ" w-googleapikey="YOUR_GOOGLE_API_KEY" w-keyword="" w-theme="simple" w-colorscheme="light" w-width="350" w-height="600" w-size="15" w-border="0" w-borderradius="4" w-postalcode="" w-radius="25" w-city="" w-period="week" w-layout="vertical" w-attractionid="" w-promoterid="" w-venueid="" w-affiliateid="" w-segmentid="" w-proportion="custom" w-titlelink="off" w-sorting="dateAscending" w-id="id_nxnhll" w-countrycode="" w-source="" w-branding="Ticketmaster" w-latlong=""></div>
         </article>
 
         <!--More... (links?)-->
@@ -111,7 +122,10 @@
 
     <footer class="h-9 flex place-content-center">&copy; travel inspo</footer>
 
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="./assets/js/script_content.js"></script>
+    <script src="https://ticketmaster-api-staging.github.io/products-and-docs/widgets/event-discovery/1.0.0/lib/main-widget.js"></script>
 
   </body>
 </html>
