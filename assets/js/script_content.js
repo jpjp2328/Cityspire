@@ -1,3 +1,5 @@
+// Function to toggle text (Read more...)
+
 function toggleText() {
     var dots = document.getElementById("dots");
     var moreText = document.getElementById("more");
@@ -24,80 +26,71 @@ function toggleText() {
     }
 }
 
-/* function getResult(){   
 
-  $(".five-day").empty();
-  $(".city").empty()
+// function to get current weather details
+var searchFormEl = $('#searchForm')
+var citySearchEl = $('#city-search');
 
- inputCity = document.getElementById("myInput").value;   
-  var countryCode='US';    
-  var cityCode=inputCity;       
-  
-  var geoLon;   
-  var geoLat;
-      
-  var cityName =$("<h>")    
-  cityName.addClass("h3")  
-  var temp = $("<div>")    
-  var wind = $("<div>")    
-  var humidity = $("<div>")   
-  var uvIndex = $("<div>")  
-  var icon =$("<img>")
-  icon.addClass("icon");    
-  var dateTime = $("<div>")
+var openWeatherMapKey = '2c4a921d55c896205bdca23294d0393d';
 
-  $(".city").addClass("list-group")
-  $(".city").append(cityName)    
-  $(".city").append(dateTime)    
-  $(".city").append(icon)    
-  $(".city").append(temp)    
-  $(".city").append(wind)    
-  $(".city").append(humidity)    
-  $(".city").append(uvIndex)
-  
-  
-  var geoUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityCode + "," + countryCode + "&limit=5&appid=7d1b285353ccacd5326159e04cfab063"
-      
-  //We then pass the requestUrl variable as an argument to the fetch() method, like in the following code:    
-    fetch(geoUrl)
-  
-      //Convert the response into JSON. Lastly, we return the JSON-formatted response, as follows:
-      .then(function (response) {
-        return response.json();
-      })
-  
-      .then(function (data) {
-        geoLon = data[0].lon;
-        geoLat = data[0].lat;
-  
-        //use geoLat and geoLon to fetch the current weather
-        var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + geoLat + "&lon="+ geoLon + "&exclude=minutely,hourly,alerts&units=imperial&appid=7d1b285353ccacd5326159e04cfab063";
-          
-        fetch(weatherUrl)
+function citySearch(event) {
+  event.preventDefault()
+  callCurrentWeatherDataAPI(citySearchEl.val())
+}
 
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          // console.log(data)
-          
-          weatherIcon= data.current.weather[0].icon;
-          imgSrc = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
-          icon.attr('src',imgSrc)
-      
-          cityName.text(cityCode);
-          //translate utc to date
-          var date = new Date(data.current.dt * 1000);
-          dateTime.text("("+ (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + ")");
+// call API functions
+function callCurrentWeatherDataAPI(cityName) {
+  var url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${cityName}&appid=${openWeatherMapKey}`;
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    // console.log(data);
+    console.log(data.coord.lon, data.coord.lat);
+    console.log(data.sys.country);
+    cityName = data.name;
+    countryCode = data.sys.country;
+    console.log('callCurrentWeatherDataAPI: ', cityName);
+    callOneCallAPI(cityName, data.coord.lon, data.coord.lat);
+    })
 
-          temp.text("Temperature: "+ data.current.temp + " F");
-          humidity.text("Humidity: " + data.current.humidity + " %");
-          wind.text("Wind Speed: " + data.current.wind_speed + " MPH");
+  return;
+}
 
-          // WHEN I view the UV index
-          // THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe    
-          var uvi =$("<div>")
-          uvIndex.text("UV Index: ");
-          uvi.text(data.current.uvi)
-          uvIndex.append(uvi)
-          uvIndex.addClass("d-flex") */
+function callOneCallAPI(cityName, longitude, latitude) {
+  var url = `https://api.openweathermap.org/data/2.5/onecall?units=metric&lon=${longitude}&lat=${latitude}&appid=${openWeatherMapKey}`
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    // console.log(data);
+    displayCurrentWeather(cityName, data.current);
+    eventWidgetLocation(cityName, countryCode);
+  });
+}
+
+// Function to display current city info and conditions
+function displayCurrentWeather(cityName, currentWeather) {
+  $('#cityName').html(cityName); // city name
+  $('#currentWeatherDate').html(moment().format('M/D/YYYY')) //date
+  $('#currentWeatherIcon').attr('src', `http://openweathermap.org/img/wn/${currentWeather.weather[0].icon}.png`); //icon of weather conditions
+  $('#currentWeatherTemp').html(currentWeather.temp) //temp
+  $('#currentWeatherHumidity').html(currentWeather.humidity) //humidity
+  $('#currentWeatherWind').html(currentWeather.wind_speed) //wind speed
+  $('#currentWeatherUV').html(currentWeather.uvi) //uv index
+
+}
+
+// Function to change event widget detail to selected city need API with country code
+function eventWidgetLocation(cityName, countryCode) {
+  console.log(cityName, countryCode)
+  $('#eventWidget').attr('w-city', cityName)
+  $('#eventWidget').attr('w-countrycode', countryCode)
+
+}
+
+
+// initialize events
+function init() {
+  searchFormEl.submit(citySearch)
+}
+
+init()
