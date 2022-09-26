@@ -1,41 +1,29 @@
-// Function to toggle text (Read more...)
-
-function toggleText() {
-    var dots = document.getElementById("dots");
-    var moreText = document.getElementById("more");
-    var button = document.getElementById("button");
-
-    if (dots.classList.contains("hidden")) {
-        // Show the dots
-        dots.classList.remove("hidden");
-
-        // Hide the more text
-        moreText.classList.add("hidden");
-
-        // change text of the button
-        button.innerHTML = "Read more";
-    } else {
-        // Hide the dots
-        dots.classList.add("hidden");
-
-        // hide the more text
-        moreText.classList.remove("hidden");
-
-        // change text of the button
-        button.innerHTML = "Read less";
-    }
-}
-
 
 // function to get current weather details
-var searchFormEl = $('#searchForm')
-var citySearchEl = $('#city-search');
+const searchFormEl = $('#searchForm')
+const citySearchEl = $('#city-search');
 
-var openWeatherMapKey = '2c4a921d55c896205bdca23294d0393d';
+let map;
+
+const openWeatherMapKey = '2c4a921d55c896205bdca23294d0393d';
+const googleKey = 'AIzaSyA2SZRWK-idQmJ5RiyvTjZsGzLhm3W_XAg'
 
 function citySearch(event) {
-  event.preventDefault()
+
+  if (citySearchEl.val() === '') {
+    return
+  } 
+    
+  event.preventDefault();
+
   callCurrentWeatherDataAPI(citySearchEl.val())
+
+  console.log(citySearchEl.val())
+
+//   loadMap();
+
+  loadWiki();
+
 }
 
 // call API functions
@@ -87,6 +75,86 @@ function eventWidgetLocation(cityName, countryCode) {
 
 }
 
+
+// https://developers.google.com/maps/documentation/javascript
+// https://developers.google.com/maps/documentation/geocoding/start
+
+/*
+
+Map not showing up at the moment
+
+const loadMap = () => {
+
+  let url2 = `https://maps.googleapis.com/maps/api/geocode/json?address=${citySearchEl.val()}&key=${googleKey}`;
+
+  fetch(url2)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      // console.log(data);
+
+      generateMap(data)
+    });
+}
+
+const generateMap = (data) => {
+  // Create the script tag, set the appropriate attributes
+  let script = document.createElement('script');
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${googleKey}&callback=initMap`;
+  script.async = true;
+
+  let lat = data.results[0].geometry.location.lat;
+  let lng = data.results[0].geometry.location.lng;
+
+  console.log(lat);
+  console.log(lng);
+
+  // Attach your callback function to the `window` object
+  window.initMap = function() {
+    // JS API is loaded and available
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: lat, lng: lng },
+      zoom: 12,
+    });
+  };
+
+  // Append the 'script' element to 'head'
+  document.head.appendChild(script);
+}
+*/
+
+// https://www.mediawiki.org/wiki/API:Main_page
+// https://www.youtube.com/watch?v=RPz75gcHj18
+// https://www.youtube.com/watch?v=yqwHxAH1xrw
+
+const loadWiki = () => {
+
+  // Will need to replay spaces and commas with underscores
+
+  let infoURL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=1200&format=json&origin=*&titles=${citySearchEl.val()}`
+
+  console.log(infoURL)
+
+  fetch(infoURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      // console.log(data);
+
+      let page = data.query.pages;
+      let pageID = Object.keys(data.query.pages)[0];
+      // let content = page[pageID].revisions[0]['*'];
+      let content = page[pageID].extract;
+
+      console.log(content);
+
+      document.getElementById('content').innerHTML = content
+
+    });
+
+}
 
 // initialize events
 function init() {
