@@ -20,7 +20,7 @@ function citySearch(event) {
 
   console.log(citySearchEl.val())
 
-//   loadMap();
+  loadMap();
 
   loadWiki();
 
@@ -75,13 +75,8 @@ function eventWidgetLocation(cityName, countryCode) {
 
 }
 
-
 // https://developers.google.com/maps/documentation/javascript
 // https://developers.google.com/maps/documentation/geocoding/start
-
-/*
-
-Map not showing up at the moment
 
 const loadMap = () => {
 
@@ -122,7 +117,6 @@ const generateMap = (data) => {
   // Append the 'script' element to 'head'
   document.head.appendChild(script);
 }
-*/
 
 // https://www.mediawiki.org/wiki/API:Main_page
 // https://www.youtube.com/watch?v=RPz75gcHj18
@@ -132,7 +126,7 @@ const loadWiki = () => {
 
   // Will need to replay spaces and commas with underscores
 
-  let infoURL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=1200&format=json&origin=*&titles=${citySearchEl.val()}`
+    let infoURL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=1200&format=json&origin=*&titles=${citySearchEl.val()}`
 
   console.log(infoURL)
 
