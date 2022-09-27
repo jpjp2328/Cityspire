@@ -55,3 +55,27 @@ function getPlaceInfo(placeId, photoEl) {
     // Request place details from Google API
     placesService.getDetails(request, callback);
   }
+
+/**
+* Get id of a place and call getPlaceInfo to also get the image
+* @param {string} placeName Name of place to search for the id of
+* @param {HTMLImageElement} photoEl Element to assign the image to
+*/
+function findPlace(placeName, photoEl) {
+    const request = {
+      query: placeName,
+      // Retrieve id of the place
+      fields: ['place_id'],
+    };
+    
+    // Handle response from places API for place id
+    function callback(results, status) {
+      // Make sure a valid response was received
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        // Use first id of the place
+        getPlaceInfo(results[0].place_id, photoEl)
+      }
+    }
+    // Call Google API to find place id
+    placesService.findPlaceFromQuery(request, callback);
+  }
