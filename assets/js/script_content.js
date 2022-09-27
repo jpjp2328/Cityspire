@@ -35,7 +35,7 @@ const googleKey = 'AIzaSyA2SZRWK-idQmJ5RiyvTjZsGzLhm3W_XAg'
 
 function citySearch(event) {
   
-  citySearchEl = $('#city-search').val()
+  citySearchEl = citySearchEl ? citySearchEl : $('#city-search').val()
 
   console.log("HEREEEE",citySearchEl)
 
@@ -55,7 +55,8 @@ function citySearch(event) {
   loadMap();
 
   loadWiki();
-
+  
+  citySearchEl = null
 }
 
 // call API functions
