@@ -4,10 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
     <title>Travel Inspo</title>
+
     <script defer src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="./assets/css/style.css" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" defer></script>
+    <script src="https://ticketmaster-api-staging.github.io/products-and-docs/widgets/event-discovery/1.0.0/lib/main-widget.js" defer></script>
+    <script src="./assets/js/script_content.js" defer></script>
   </head>
 
   <body class ="bg-neutral-50">
@@ -90,15 +97,15 @@
       <!--Maps and Images column (right)-->
       <aside class="w-full w-3/5 flex flex-col items-center px-3">
         <!--Image section-->
-        <div class="flex flex-col content-center justify-center shadow bg-white my-4 p-6">
+        <div class="flex flex-col content-center justify-center shadow bg-white my-4 p-6" >
           <img src ="assets/images/placeholder.jpg" alt="" class= "" id="cityImage">
         </div>
 
         <!--Map section-->
-        <div class="flex content-center justify-center shadow bg-white my-4 p-6" id="mapOfCity">
-          <img src ="assets/images/placeholder.jpg" alt="" class= "" id="cityImage">
+        <div class="flex flex-col content-center justify-center shadow bg-white my-4 p-6">
+          <div id="map" class="flex content-center justify-center shadow bg-white my-10 p-6 w-96 h-96"></div>
         </div>
-
+        
 
         <!--Go back button-->
         <div class="w-full w-3/5 flex flex-col grid justify-items-end mt-4 ">
@@ -111,10 +118,7 @@
 
     <footer class="h-9 flex place-content-center">&copy; travel inspo</footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="./assets/js/script_content.js"></script>
-    <script src="https://ticketmaster-api-staging.github.io/products-and-docs/widgets/event-discovery/1.0.0/lib/main-widget.js"></script>
+    
 
   </body>
 </html>
