@@ -38,7 +38,32 @@ function findPlaceForCarousel(placeName) {
 
 // function to get current weather details
 const searchFormEl = $('#searchForm')
-const citySearchEl = $('#city-search');
+let citySearchEl = ""
+
+
+// grab the url
+let url = window.location.href
+console.log(url)
+
+const urlStart = url.indexOf('=')
+
+const urlEnd = url.indexOf(',')
+
+console.log(urlStart)
+
+console.log(urlEnd)
+
+console.log(url.substring(urlStart + 1))
+
+/*
+const getCityFromUrl = () => {
+  // if the url doesnt have a comma 
+  if () {
+
+  }
+
+}
+*/
 
 let map;
 
@@ -47,20 +72,28 @@ const googleKey = 'AIzaSyA2SZRWK-idQmJ5RiyvTjZsGzLhm3W_XAg'
 
 function citySearch(event) {
   
-  if (citySearchEl.val() === '') {
+  citySearchEl = citySearchEl ? citySearchEl : $('#city-search').val()
+
+  console.log("HEREEEE",citySearchEl)
+
+  if (citySearchEl === '') {
     return
   } 
+
+  if (event) {
+    event.preventDefault();
+  } 
   
-  event.preventDefault();
-  
-  callCurrentWeatherDataAPI(citySearchEl.val())
-  
-  console.log(citySearchEl.val())
-  
+
+  callCurrentWeatherDataAPI(citySearchEl)
+
+  console.log(citySearchEl)
+
   loadMap();
   
   loadWiki();
   
+  citySearchEl = null
 }
 
 // call API functions
@@ -117,9 +150,9 @@ function eventWidgetLocation(cityName, countryCode) {
 // https://developers.google.com/maps/documentation/geocoding/start
 
 const loadMap = () => {
-  
-  let url2 = `https://maps.googleapis.com/maps/api/geocode/json?address=${citySearchEl.val()}&key=${googleKey}`;
-  
+
+  let url2 = `https://maps.googleapis.com/maps/api/geocode/json?address=${citySearchEl}&key=${googleKey}`;
+
   fetch(url2)
   .then(function (response) {
     return response.json();
@@ -164,8 +197,9 @@ const loadWiki = () => {
   
   // Will need to replay spaces and commas with underscores
   
-  let infoURL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=1200&format=json&origin=*&titles=${citySearchEl.val()}`
-  
+
+    let infoURL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=1200&format=json&origin=*&titles=${citySearchEl}`
+
   console.log(infoURL)
   
   fetch(infoURL)
@@ -240,13 +274,27 @@ clearHistoryBtn.addEventListener("click", () => {
 
 // initialize events
 function init() {
+  
+  if (document.location.search.length > 1) {
+
+    citySearchEl = document.location.search.split("=")[1].split(",")[0]
+
+    citySearch()
+    // document.location.search = ''
+  }
+  
+  
   searchFormEl.submit(citySearch)
+
   tempArr = JSON.parse(localStorage.getItem('searchHistory'))
   if (tempArr != null){
     for (let index = 0; index < tempArr.length; index++) {
       displaySearchHistory(tempArr[index], true)
     }
   }
+
 }
 
 init()
+
+//if there's a query string, then execute4 function search
