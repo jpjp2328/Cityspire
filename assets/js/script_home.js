@@ -22,6 +22,9 @@ function initAutocomplete() {
     });
     
     placesService = new google.maps.places.PlacesService(document.createElement('div'));
+    
+    // Display 3 random destinations when the page loads
+    randomPlaces(document.getElementById('home-photo1'), document.getElementById('home-photo2'), document.getElementById('home-photo3'));
 }
 
 /**
@@ -96,12 +99,12 @@ function randomPlaces(photoEl1, photoEl2, photoEl3) {
     if(countryList.length === 0) {
         // TODO: Make sure country list is received before adding images to page
         fetch(countryRequestUrl)
-            .then(function (response) { return response.json(); })
-            .then(function(data) {
-                // Convert country objects to names only
-                countryList = data.map((country) => country.name.common);
-                // Save list of countries to local storage
-                localStorage.setItem('countryList', JSON.stringify(countryList));
+        .then(function (response) { return response.json(); })
+        .then(function(data) {
+            // Convert country objects to names only
+            countryList = data.map((country) => country.name.common);
+            // Save list of countries to local storage
+            localStorage.setItem('countryList', JSON.stringify(countryList));
         });
     }
     
