@@ -227,7 +227,7 @@ const searchHistoryEl = $('#searchHistory')
 
 function displaySearchHistory(cityName, initialStart) {
   
-  $('#searchHistory').attr('style', '""');
+  $('#clearHistoryBtn').attr('style', '""');
   var matchFound = false;
   $('#searchHistory').children('').each(function(i) {
     if (cityName == $(this).text()) {
@@ -240,6 +240,9 @@ function displaySearchHistory(cityName, initialStart) {
   var buttonEl = $(`<button class="mt-3 w-40 px-2 py-2 bg-gray-500 text-white rounded duration-300 hover:bg-gray-700">${cityName}</button>`)
   buttonEl.on('click', previousButtonClick);
   buttonEl.prependTo(searchHistoryEl);
+
+  var clearHistoryBtn = $('#clearHistoryBtn')
+  clearHistoryBtn.on('click',clearLocalStorage)
   
   if (!initialStart) {savePreviousData(cityName)};
 }
@@ -262,15 +265,15 @@ function previousButtonClick(event) {
 
 // Clear History Function
 
-/* const clearHistoryBtn = $('#clearHistoryBtn')
+function clearLocalStorage() {
 
-clearHistoryBtn.addEventListener("click", () => {
-  localStorage.clear();
-  searchHistoryEl = [];
-  citySearch.value = "";
-  
-});
-*/
+  var searchHistoryEl = $('#searchHistory');
+
+  localStorage.removeItem("searchHistory");
+  searchHistoryEl.html("");
+
+  return;
+}
 
 // initialize events
 function init() {
