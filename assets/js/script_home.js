@@ -80,6 +80,9 @@ function findPlace(placeName, photoEl) {
     placesService.findPlaceFromQuery(request, callback);
 }
 
+// API url to get list of countries
+const countryRequestUrl = 'https://restcountries.com/v3.1/all';
+
 /**
 * Find 3 random images and attach them to the img tags
 * @param {HTMLImageElement} photoEl1 First element to add image to
