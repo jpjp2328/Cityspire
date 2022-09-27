@@ -23,3 +23,35 @@ function initAutocomplete() {
   
   placesService = new google.maps.places.PlacesService(document.createElement('div'));
 }
+
+/**
+* Get photos for a place and assign one of them to the img tag provided
+* @param {string} placeId Identifier for the place found from the Google API
+* @param {HTMLImageElement} photoEl Element to assign the image to
+*/
+function getPlaceInfo(placeId, photoEl) {
+    const request = {
+      placeId,
+      // Retrieve name and photos of the place
+      fields: ['name', 'photos']
+    };
+    
+    // Handle response from places API for photos
+    function callback(place, status) {
+      // Make sure a valid response was received
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        // Use first photo of the place
+        const imgUrl = (place.photos[0].getUrl());
+        // Attach image to photo element
+        photoEl.src = imgUrl;
+        // Add a caption with the name of the place 
+        photoEl.nextElementSibling.innerHTML = place.name;
+        // Make photo clickable to take you to the details page of the place
+        photoEl.onclick = function() {
+          document.location = `content.html?location=${place.name}`
+        }
+      }
+    }
+    // Request place details from Google API
+    placesService.getDetails(request, callback);
+  }
