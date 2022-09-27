@@ -227,7 +227,7 @@ const searchHistoryEl = $('#searchHistory')
 
 function displaySearchHistory(cityName, initialStart) {
   
-  $('#searchHistory').attr('style', '""');
+  $('#clearHistoryBtn').attr('style', '""');
   var matchFound = false;
   $('#searchHistory').children('').each(function(i) {
     if (cityName == $(this).text()) {
@@ -270,7 +270,7 @@ function clearLocalStorage() {
   var searchHistoryEl = $('#searchHistory');
 
   localStorage.removeItem("searchHistory");
-  searchHistoryEl.innerHTML = '';
+  searchHistoryEl.html("");
 
   return;
 }
