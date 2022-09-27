@@ -41,20 +41,13 @@
             <h2 class = "text-5xl font-semibold py-4 underline decoration-2 underline-offset-4" id ="cityName">City here</h2>
             <div id="content"></div>
           
-          <button id="button" class="mt-3 w-40 px-5 py-2 bg-gray-500 text-white rounded duration-300 hover:bg-gray-700 justify-end">Read more</button>
+          <button id="readMoreBtn" class="mt-3 w-40 px-5 py-2 bg-gray-500 text-white rounded duration-300 hover:bg-gray-700 justify-end">Read more</button>
           </div>
         </article>
 
         <!--Weather Dashboard/Time?-->
         <article class="w-full bg-white shadow flex my-4 p-6" id="weatherDash">
-          <div class="flex flex-col w-full w-2/5 items-center">
-            <p class="text-lg font-semibold pb-4">Time</p>
-            <div id ="currentTime">
-
-            </div>
-          </div>
-
-          <div class="w-full w-2/5 flex flex-wrap justify-end">
+          <div class="flex flex-col w-full items-center">
             <p class="text-lg font-semibold pb-4">Current Weather</p>
             <div id="currentWeatherContainer">
               <p class=""><span id="currentWeatherDate">00/00/0000</span></p>
@@ -64,15 +57,7 @@
               <p class="">Humidity: <span id="currentWeatherHumidity">00</span>%</p>
               <p class="">UV Index: <span id="currentWeatherUV">00.00</span></p>
             </div>
-
           </div>
-
-        </article>
-
-        <!--News/Feature container (TBD)-->
-        <article class="w-full bg-white shadow flex flex-col my-4 p-6" id="featureContainer">
-          <p class="text-xl font-semibold pb-4">News/Feature</p>
-          <p class="text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis est eu odio sagittis tristique. Vestibulum ut finibus leo. In hac habitasse platea dictumst.</p>
 
         </article>
 
@@ -82,20 +67,16 @@
           <!--TicketMaster event widget-->
           <div id="eventWidget" w-type="event-discovery" w-tmapikey="Q0bOSAYkWyuMDOGA0YqsUC1TysuxNOXJ" w-googleapikey="YOUR_GOOGLE_API_KEY" w-keyword="" w-theme="simple" w-colorscheme="light" w-width="350" w-height="600" w-size="15" w-border="0" w-borderradius="4" w-postalcode="" w-radius="25" w-city="" w-period="week" w-layout="vertical" w-attractionid="" w-promoterid="" w-venueid="" w-affiliateid="" w-segmentid="" w-proportion="custom" w-titlelink="off" w-sorting="dateAscending" w-id="id_nxnhll" w-countrycode="" w-source="" w-branding="Ticketmaster" w-latlong=""></div>
         </article>
-
-        <!--More... (links?)-->
-        <article class="w-full bg-white shadow flex flex-col my-4 p-6">
-          <p class="text-xl font-semibold pb-4">More...</p>
-          <div class="grid grid-cols-3 gap-3">
-            <img class="hover:opacity-75" src="assets/images/placeholder.jpg">
-            <img class="hover:opacity-75" src="assets/images/placeholder.jpg">
-            <img class="hover:opacity-75" src="assets/images/placeholder.jpg">
-            <img class="hover:opacity-75" src="assets/images/placeholder.jpg">
-            <img class="hover:opacity-75" src="assets/images/placeholder.jpg">
-            <img class="hover:opacity-75" src="assets/images/placeholder.jpg">
-        </div>
-        </article>
         
+        <!--News/Feature container (TBD)-->
+        <article class="w-full bg-white shadow flex flex-col my-4 p-6 items-center" id="featureContainer">
+          <p class="text-xl font-semibold pb-4">Search History</p>
+          <!--Search History-->
+          <div id="searchHistory" class="flex flex-col" style="display: none;">
+            <button id="clearHistoryBtn" class="mt-3 w-40 px-2 py-2 bg-rose-500 text-white rounded duration-300 hover:bg-rose-700">Clear History</button>
+          </div>
+
+        </article>
 
       </main>
 

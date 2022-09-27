@@ -39,6 +39,7 @@ function callCurrentWeatherDataAPI(cityName) {
     countryCode = data.sys.country;
     console.log('callCurrentWeatherDataAPI: ', cityName);
     callOneCallAPI(cityName, data.coord.lon, data.coord.lat);
+    displaySearchHistory(cityName, false)
     })
 
   return;
@@ -150,9 +151,66 @@ const loadWiki = () => {
 
 }
 
+// Local Storage Search history
+
+const searchHistoryEl = $('#searchHistory')
+
+function displaySearchHistory(cityName, initialStart) {
+
+  $('#searchHistory').attr('style', '""');
+  var matchFound = false;
+  $('#searchHistory').children('').each(function(i) {
+      if (cityName == $(this).text()) {
+          matchFound = true;
+          return;
+      }
+  });
+  if (matchFound) {return;}
+
+  var buttonEl = $(`<button class="mt-3 w-40 px-2 py-2 bg-gray-500 text-white rounded duration-300 hover:bg-gray-700">${cityName}</button>`)
+  buttonEl.on('click', previousButtonClick);
+  buttonEl.prependTo(searchHistoryEl);
+
+  if (!initialStart) {savePreviousData(cityName)};
+}
+
+function savePreviousData(cityName) {
+  tempItem = JSON.parse(localStorage.getItem('searchHistory'))
+  if (tempItem != null) {
+      localStorage.setItem('searchHistory', JSON.stringify(tempItem.concat(cityName)))
+  } else {
+      tempArr = [cityName];
+      localStorage.setItem('searchHistory', JSON.stringify(tempArr))
+  }
+}
+
+function previousButtonClick(event) {
+  callCurrentWeatherDataAPI(event.target.innerHTML);
+  // THIS DOESNT WORK
+  loadWiki();
+}
+
+// Clear History Function
+
+/* const clearHistoryBtn = $('#clearHistoryBtn')
+
+clearHistoryBtn.addEventListener("click", () => {
+  localStorage.clear();
+  searchHistoryEl = [];
+  citySearch.value = "";
+
+});
+ */
+
 // initialize events
 function init() {
   searchFormEl.submit(citySearch)
+  tempArr = JSON.parse(localStorage.getItem('searchHistory'))
+  if (tempArr != null){
+    for (let index = 0; index < tempArr.length; index++) {
+      displaySearchHistory(tempArr[index], true)
+    }
+  }
 }
 
 init()
