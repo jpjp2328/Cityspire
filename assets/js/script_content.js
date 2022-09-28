@@ -257,10 +257,8 @@ function savePreviousData(cityName) {
 function previousButtonClick(event) {
   callCurrentWeatherDataAPI(event.target.innerHTML);
   findPlaceForCarousel(event.target.innerHTML);
-  // THIS DOESNT WORK
 
-  loadWiki();
-  loadMap();
+  document.location = `content.html?location=${event.target.innerHTML}`
 
 }
 
