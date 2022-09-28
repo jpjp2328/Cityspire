@@ -146,7 +146,7 @@ function eventWidgetLocation(cityName, countryCode) {
 // https://developers.google.com/maps/documentation/javascript
 // https://developers.google.com/maps/documentation/geocoding/start
 
-const loadMap = () => {
+const loadMap = (citySearchEl) => {
   
   let url2 = `https://maps.googleapis.com/maps/api/geocode/json?address=${citySearchEl}&key=${googleKey}`;
   
@@ -155,7 +155,7 @@ const loadMap = () => {
     return response.json();
   })
   .then(function (data) {
-    // console.log(data);
+    //console.log(data);
     
     generateMap(data)
   });
@@ -190,7 +190,7 @@ const generateMap = (data) => {
 // https://www.youtube.com/watch?v=RPz75gcHj18
 // https://www.youtube.com/watch?v=yqwHxAH1xrw
 
-const loadWiki = () => {
+const loadWiki = (citySearchEl) => {
   
   // Will need to replay spaces and commas with underscores
   
@@ -256,8 +256,11 @@ function savePreviousData(cityName) {
 
 function previousButtonClick(event) {
   callCurrentWeatherDataAPI(event.target.innerHTML);
-  // THIS DOESNT WORK
-  loadWiki();
+  findPlaceForCarousel(event.target.innerHTML);
+  loadMap(event.target.innerHTML);
+  loadWiki(event.target.innerHTML);
+  
+  return;
 }
 
 // Clear History Function
