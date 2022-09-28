@@ -73,6 +73,10 @@ function findPlace(placeName, photoEl) {
     
     // Handle response from places API for place id
     function callback(results, status) {
+        // Receive new place if the requested place has no images
+        if (results == null) {
+            return randomPlace(photoEl)
+        }
         // Make sure a valid response was received
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             // Use first id of the place
@@ -121,6 +125,29 @@ function randomPlaces(photoEl1, photoEl2, photoEl3) {
     findPlace(randomCountry1, photoEl1);
     findPlace(randomCountry2, photoEl2);
     findPlace(randomCountry3, photoEl3);
+}
+
+// Pick a new random place if the requested place has no images
+function randomPlace(photoEl1) {
+    // Loading the saved list of countries if it has been saved
+    let countryList = JSON.parse(localStorage.getItem('countryList') || '[]');
+    // Check for saved countries
+    if(countryList.length === 0) {
+        fetch(countryRequestUrl)
+        .then(function (response) { return response.json(); })
+        .then(function(data) {
+            // Convert country objects to names only
+            countryList = data.map((country) => country.name.common);
+            // Save list of countries to local storage
+            localStorage.setItem('countryList', JSON.stringify(countryList));
+        });
+    }
+    
+    let list = countryList;
+    // Pick a random country from the list of countries
+    const randomCountry1 = list[Math.floor(Math.random() * list.length)];
+    // Get place information and images for a random country
+    findPlace(randomCountry1, photoEl1);
 }
 
 window.onload = function() {

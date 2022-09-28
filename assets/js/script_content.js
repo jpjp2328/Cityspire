@@ -15,7 +15,7 @@ function getPlaceInfoForCarousel(placeId) {
   function callback(place, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       place.photos.forEach((photo, i) => {
-        // ! Only show first 4 images for now
+        // Only show first 4 images for now
         if(i < 4) {
           $(`#carousel-photo${i + 1} img`).attr('src', photo.getUrl);
         }
@@ -59,9 +59,9 @@ console.log(url.substring(urlStart + 1))
 const getCityFromUrl = () => {
   // if the url doesnt have a comma 
   if () {
-
+    
   }
-
+  
 }
 */
 
@@ -73,22 +73,17 @@ const googleKey = 'AIzaSyA2SZRWK-idQmJ5RiyvTjZsGzLhm3W_XAg'
 function citySearch(event) {
   
   citySearchEl = citySearchEl ? citySearchEl : $('#city-search').val()
-
-  console.log("HEREEEE",citySearchEl)
-
+  
   if (citySearchEl === '') {
     return
   } 
-
+  
   if (event) {
     event.preventDefault();
   } 
   
-
   callCurrentWeatherDataAPI(citySearchEl)
-
-  console.log(citySearchEl)
-
+  
   loadMap();
   
   loadWiki();
@@ -102,7 +97,6 @@ function callCurrentWeatherDataAPI(cityName) {
   fetch(url)
   .then(response => response.json())
   .then(data => {
-    // console.log(data);
     console.log(data.coord.lon, data.coord.lat);
     console.log(data.sys.country);
     cityName = data.name;
@@ -120,7 +114,6 @@ function callOneCallAPI(cityName, longitude, latitude) {
   fetch(url)
   .then(response => response.json())
   .then(data => {
-    // console.log(data);
     displayCurrentWeather(cityName, data.current);
     eventWidgetLocation(cityName, countryCode);
   });
@@ -140,19 +133,23 @@ function displayCurrentWeather(cityName, currentWeather) {
 
 // Function to change event widget detail to selected city need API with country code
 function eventWidgetLocation(cityName, countryCode) {
-  console.log(cityName, countryCode)
   $('#eventWidget').attr('w-city', cityName)
   $('#eventWidget').attr('w-countrycode', countryCode)
-  
+  // Add ticketmaster API after a location has been searched for
+  const scriptTag = document.createElement("script");
+  scriptTag.type = "text/javascript";
+  scriptTag.src = "https://ticketmaster-api-staging.github.io/products-and-docs/widgets/event-discovery/1.0.0/lib/main-widget.js";
+  // Use any selector
+  $("head").append(scriptTag);
 }
 
 // https://developers.google.com/maps/documentation/javascript
 // https://developers.google.com/maps/documentation/geocoding/start
 
 const loadMap = () => {
-
+  
   let url2 = `https://maps.googleapis.com/maps/api/geocode/json?address=${citySearchEl}&key=${googleKey}`;
-
+  
   fetch(url2)
   .then(function (response) {
     return response.json();
@@ -197,9 +194,9 @@ const loadWiki = () => {
   
   // Will need to replay spaces and commas with underscores
   
-
-    let infoURL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=1200&format=json&origin=*&titles=${citySearchEl}`
-
+  
+  let infoURL = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=1200&format=json&origin=*&titles=${citySearchEl}`
+  
   console.log(infoURL)
   
   fetch(infoURL)
@@ -240,7 +237,7 @@ function displaySearchHistory(cityName, initialStart) {
   var buttonEl = $(`<button class="mt-3 w-40 px-2 py-2 bg-gray-500 text-white rounded duration-300 hover:bg-gray-700">${cityName}</button>`)
   buttonEl.on('click', previousButtonClick);
   buttonEl.prependTo(searchHistoryEl);
-
+  
   var clearHistoryBtn = $('#clearHistoryBtn')
   clearHistoryBtn.on('click',clearLocalStorage)
   
@@ -266,36 +263,46 @@ function previousButtonClick(event) {
 // Clear History Function
 
 function clearLocalStorage() {
-
+  
   var searchHistoryEl = $('#searchHistory');
-
+  
   localStorage.removeItem("searchHistory");
   searchHistoryEl.html("");
-
+  
   return;
+}
+
+// Redirect to content page when the user searches for a location
+function searchForCity(event) {
+  citySearchEl = citySearchEl ? citySearchEl : $('#city-search').val()
+  if (citySearchEl === '') {
+    return
+  } 
+
+  if (event) {
+    event.preventDefault();
+  } 
+  document.location = `content.html?location=${citySearchEl}`
 }
 
 // initialize events
 function init() {
   
   if (document.location.search.length > 1) {
-
+    
     citySearchEl = document.location.search.split("=")[1].split(",")[0]
-
+    
     citySearch()
-    // document.location.search = ''
   }
   
+  searchFormEl.submit(searchForCity)
   
-  searchFormEl.submit(citySearch)
-
   tempArr = JSON.parse(localStorage.getItem('searchHistory'))
   if (tempArr != null){
     for (let index = 0; index < tempArr.length; index++) {
       displaySearchHistory(tempArr[index], true)
     }
   }
-
 }
 
 init()
