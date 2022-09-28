@@ -2,6 +2,14 @@
 const queryString = window.location.search;   
 const urlParams = new URLSearchParams(queryString);
 const locationName = urlParams.get('location');
+const searchFormEl = $('#searchForm')
+let citySearchEl = ""
+
+let map;
+
+const openWeatherMapKey = '2c4a921d55c896205bdca23294d0393d';
+const googleKey = 'AIzaSyA2SZRWK-idQmJ5RiyvTjZsGzLhm3W_XAg'
+
 
 function initCarousel() {
   placesService = new google.maps.places.PlacesService(document.createElement('div'));
@@ -35,40 +43,6 @@ function findPlaceForCarousel(placeName) {
   }
   placesService.findPlaceFromQuery(request, callback);
 }
-
-// function to get current weather details
-const searchFormEl = $('#searchForm')
-let citySearchEl = ""
-
-
-// grab the url
-let url = window.location.href
-console.log(url)
-
-const urlStart = url.indexOf('=')
-
-const urlEnd = url.indexOf(',')
-
-console.log(urlStart)
-
-console.log(urlEnd)
-
-console.log(url.substring(urlStart + 1))
-
-/*
-const getCityFromUrl = () => {
-  // if the url doesnt have a comma 
-  if () {
-    
-  }
-  
-}
-*/
-
-let map;
-
-const openWeatherMapKey = '2c4a921d55c896205bdca23294d0393d';
-const googleKey = 'AIzaSyA2SZRWK-idQmJ5RiyvTjZsGzLhm3W_XAg'
 
 function citySearch(event) {
   
@@ -214,6 +188,9 @@ const loadWiki = () => {
     console.log(content);
     
     document.getElementById('content').innerHTML = content
+
+    const wikipediaButton = document.getElementById('readMoreBtn')
+    wikipediaButton.innerHTML = `<a href="https://en.wikipedia.org/?curid=${pageID}" target="_blank">Read More</a>`
     
   });
 }
@@ -308,5 +285,3 @@ function init() {
 }
 
 init()
-
-//if there's a query string, then execute4 function search
