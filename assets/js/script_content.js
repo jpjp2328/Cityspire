@@ -256,8 +256,10 @@ function savePreviousData(cityName) {
 
 function previousButtonClick(event) {
   callCurrentWeatherDataAPI(event.target.innerHTML);
-  // THIS DOESNT WORK
-  loadWiki();
+  findPlaceForCarousel(event.target.innerHTML);
+
+  document.location = `content.html?location=${event.target.innerHTML}`
+
 }
 
 // Clear History Function

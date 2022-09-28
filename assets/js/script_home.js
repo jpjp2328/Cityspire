@@ -155,7 +155,12 @@ window.onload = function() {
     var destinationContent = document.getElementById('destinationContent');
     var closeBtn = document.getElementById('closeBtn');
     var overlay = document.getElementById('overlay');
-    
+    var topCity1Btn = document.getElementById('topCity1Btn')
+    var topCity2Btn = document.getElementById('topCity2Btn')
+    var topCity3Btn = document.getElementById('topCity3Btn')
+    var topCity4Btn = document.getElementById('topCity4Btn')
+    var topCity5Btn = document.getElementById('topCity5Btn')
+
     destinationBtn.addEventListener('click', function () {
         destinationContent.classList.remove('hidden');
         overlay.classList.remove('hidden');
@@ -165,4 +170,25 @@ window.onload = function() {
         destinationContent.classList.add('hidden');
         overlay.classList.add('hidden');
     });
+
+    topCity1Btn.addEventListener('click', function () {
+        document.location = `content.html?location=${this.innerHTML}`
+    })
+
+    topCity2Btn.addEventListener('click', function () {
+        document.location = `content.html?location=${this.innerHTML}`
+    })
+
+    topCity3Btn.addEventListener('click', function () {
+        document.location = `content.html?location=${this.innerHTML}`
+    })
+
+    topCity4Btn.addEventListener('click', function () {
+        document.location = `content.html?location=${this.innerHTML}`
+    })
+
+    topCity5Btn.addEventListener('click', function () {
+        document.location = `content.html?location=${this.innerHTML}`
+    })
+
 }
