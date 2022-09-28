@@ -83,6 +83,7 @@ function callCurrentWeatherDataAPI(cityName) {
   return;
 }
 
+// API call to get the relevant weather conditions 
 function callOneCallAPI(cityName, longitude, latitude) {
   var url = `https://api.openweathermap.org/data/2.5/onecall?units=metric&lon=${longitude}&lat=${latitude}&appid=${openWeatherMapKey}`
   fetch(url)
@@ -102,6 +103,8 @@ function displayCurrentWeather(cityName, currentWeather) {
   $('#currentWeatherHumidity').html(currentWeather.humidity) //humidity
   $('#currentWeatherWind').html(currentWeather.wind_speed) //wind speed
   $('#currentWeatherUV').html(currentWeather.uvi) //uv index
+
+  $('#currentWeatherContainer').attr('style','""')
   
 }
 
