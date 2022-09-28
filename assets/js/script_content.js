@@ -272,6 +272,19 @@ function clearLocalStorage() {
   return;
 }
 
+// Redirect to content page when the user searches for a location
+function searchForCity(event) {
+  citySearchEl = citySearchEl ? citySearchEl : $('#city-search').val()
+  if (citySearchEl === '') {
+    return
+  } 
+
+  if (event) {
+    event.preventDefault();
+  } 
+  document.location = `content.html?location=${citySearchEl}`
+}
+
 // initialize events
 function init() {
   
@@ -282,7 +295,7 @@ function init() {
     citySearch()
   }
   
-  searchFormEl.submit(citySearch)
+  searchFormEl.submit(searchForCity)
   
   tempArr = JSON.parse(localStorage.getItem('searchHistory'))
   if (tempArr != null){
