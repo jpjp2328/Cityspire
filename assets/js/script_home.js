@@ -1,3 +1,4 @@
+/** Google places API object */
 let placesService;
 // Fill out city name in search bar when you begin typing
 function initAutocomplete() {
@@ -18,7 +19,8 @@ function initAutocomplete() {
         
         const place = autocomplete.getPlace();
         // Redirect to the details page of the place the user selected
-        document.location = `content.html?location=${place.name}`
+        // Replace spaces in place name so content page can load information
+        document.location = `content.html?location=${place.name.replace(/ /g,',')}`;
     });
     
     placesService = new google.maps.places.PlacesService(document.createElement('div'));
@@ -64,9 +66,13 @@ function getPlaceInfo(placeId, photoEl) {
 * @param {string} placeName Name of place to search for the id of
 * @param {HTMLImageElement} photoEl Element to assign the image to
 */
-function findPlace(placeName, photoEl) {
+async function findPlace(placeName, photoEl) {
+    const cities = await getCitiesForCountry(placeName);
+    if (cities.length === 0) {
+        return randomPlace(photoEl);
+    }
     const request = {
-        query: placeName,
+        query: cities[0],
         // Retrieve id of the place
         fields: ['place_id'],
     };
@@ -90,19 +96,13 @@ function findPlace(placeName, photoEl) {
 // API url to get list of countries
 const countryRequestUrl = 'https://restcountries.com/v3.1/all';
 
-/**
-* Find 3 random images and attach them to the img tags
-* @param {HTMLImageElement} photoEl1 First element to add image to
-* @param {HTMLImageElement} photoEl2 Second element to add image to
-* @param {HTMLImageElement} photoEl3 Third element to add image to
-*/
-function randomPlaces(photoEl1, photoEl2, photoEl3) {
-    // Loading the saved list of countries if it has been saved
+// Gets list of countries and saves it to local storage
+async function getCountryList() {
     let countryList = JSON.parse(localStorage.getItem('countryList') || '[]');
     // Check for saved countries
     if(countryList.length === 0) {
-        // TODO: Make sure country list is received before adding images to page
-        fetch(countryRequestUrl)
+        // Wait for countries to be returned from the API and then save them to local storage
+        await fetch(countryRequestUrl)
         .then(function (response) { return response.json(); })
         .then(function(data) {
             // Convert country objects to names only
@@ -111,8 +111,19 @@ function randomPlaces(photoEl1, photoEl2, photoEl3) {
             localStorage.setItem('countryList', JSON.stringify(countryList));
         });
     }
+    return countryList;
+}
+
+/**
+* Find 3 random images and attach them to the img tags
+* @param {HTMLImageElement} photoEl1 First element to add image to
+* @param {HTMLImageElement} photoEl2 Second element to add image to
+* @param {HTMLImageElement} photoEl3 Third element to add image to
+*/
+async function randomPlaces(photoEl1, photoEl2, photoEl3) {
+    // Loading the saved list of countries if it has been saved
+    let list = await getCountryList();
     
-    let list = countryList;
     // Pick a random country from the list of countries
     const randomCountry1 = list[Math.floor(Math.random() * list.length)];
     // Remove picked country from list
@@ -128,26 +139,27 @@ function randomPlaces(photoEl1, photoEl2, photoEl3) {
 }
 
 // Pick a new random place if the requested place has no images
-function randomPlace(photoEl1) {
-    // Loading the saved list of countries if it has been saved
-    let countryList = JSON.parse(localStorage.getItem('countryList') || '[]');
-    // Check for saved countries
-    if(countryList.length === 0) {
-        fetch(countryRequestUrl)
-        .then(function (response) { return response.json(); })
-        .then(function(data) {
-            // Convert country objects to names only
-            countryList = data.map((country) => country.name.common);
-            // Save list of countries to local storage
-            localStorage.setItem('countryList', JSON.stringify(countryList));
-        });
-    }
+async function randomPlace(photoEl1) {
+    const list = await getCountryList();
     
-    let list = countryList;
     // Pick a random country from the list of countries
     const randomCountry1 = list[Math.floor(Math.random() * list.length)];
     // Get place information and images for a random country
     findPlace(randomCountry1, photoEl1);
+}
+// API url to get list of cities in a country
+const citiesAPIUrl = 'https://api.teleport.org/api/cities/';
+
+/**
+ * Get a list of city names in a provided country
+ * @param {string} country The country to get the cities for
+ * @returns The list of cities in the country
+ */
+async function getCitiesForCountry(country) {
+    const data = await fetch (`${citiesAPIUrl}?search=${country}`)
+    .then(function (response) { return response.json(); })
+    const names = data._embedded['city:search-results'].map((city)=>city.matching_full_name);
+    return names;
 }
 
 window.onload = function() {
@@ -160,7 +172,7 @@ window.onload = function() {
     var topCity3Btn = document.getElementById('topCity3Btn')
     var topCity4Btn = document.getElementById('topCity4Btn')
     var topCity5Btn = document.getElementById('topCity5Btn')
-
+    
     destinationBtn.addEventListener('click', function () {
         destinationContent.classList.remove('hidden');
         overlay.classList.remove('hidden');
@@ -170,25 +182,26 @@ window.onload = function() {
         destinationContent.classList.add('hidden');
         overlay.classList.add('hidden');
     });
-
+    
     topCity1Btn.addEventListener('click', function () {
         document.location = `content.html?location=${this.innerHTML}`
     })
-
+    
     topCity2Btn.addEventListener('click', function () {
         document.location = `content.html?location=${this.innerHTML}`
     })
-
+    
     topCity3Btn.addEventListener('click', function () {
         document.location = `content.html?location=${this.innerHTML}`
     })
-
+    
     topCity4Btn.addEventListener('click', function () {
         document.location = `content.html?location=${this.innerHTML}`
     })
-
+    
     topCity5Btn.addEventListener('click', function () {
         document.location = `content.html?location=${this.innerHTML}`
     })
-
+    
 }
+
