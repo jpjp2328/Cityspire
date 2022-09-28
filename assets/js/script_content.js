@@ -138,7 +138,7 @@ function eventWidgetLocation(cityName, countryCode) {
   // Add ticketmaster API after a location has been searched for
   const scriptTag = document.createElement("script");
   scriptTag.type = "text/javascript";
-  scriptTag.src = "https://ticketmaster-api-staging.github.io/products-and-docs/widgets/event-discovery/1.0.0/lib/main-widget.js";
+  scriptTag.src = "https://ticketmaster-api-staging.github.io/products-and-docs/widgets/calendar/1.0.0/lib/main-widget.js";
   // Use any selector
   $("head").append(scriptTag);
 }
