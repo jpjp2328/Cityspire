@@ -57,6 +57,6 @@ This page would include all the relevant information of the selected city includ
 
 ## Final Product
 
-![](assets/images/screenshot.gif)
+![](assets/images/Cityspire.gif)
 
 Github deployment - http://jpjp2328.github.io/Cityspire
