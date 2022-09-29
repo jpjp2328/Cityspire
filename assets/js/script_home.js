@@ -1,8 +1,11 @@
 // Countries to exclude from the homepage images (they have bugs/don't load)
-const ignorePlaces = [
-    'Latvia', 'Venezuela', 'Eswatini', 'Heard Island and McDonald Islands', 'Mali', 'United States Minor Outlying Islands', 'Vietnam', 'North Macedonia', 'Panama', 'United States Virgin Islands', 'Kuwait', 'Tokelau',
+const ignorePlaces = ['Latvia', 'Venezuela', 'Eswatini', 'Heard Island and McDonald Islands', 'Mali', 'United States Minor Outlying Islands', 'Vietnam', 'North Macedonia', 'Panama', 'United States Virgin Islands',
     'Saint Helena, Ascension and Tristan da Cunha', 'Algeria', 'Guam', 'British Indian Ocean Territory', 'Slovakia', 'Jordan', 'Guinea',  'French Polynesia', 'Philippines', 'Chile', 'Bouvet Island', 'Libya',
-    'North Korea', 'Turks and Caicos Islands', 'Equatorial Guinea', 'Faroe Islands', 'Bosnia and Herzegovina'];
+    'North Korea', 'Turks and Caicos Islands', 'Equatorial Guinea', 'Faroe Islands', 'Bosnia and Herzegovina', 'Palau', 'Haiti', 'Guyana', 'Bangladesh', 'Cayman Islands', 'Puerto Rico', 'Wallis and Futuna',
+    'Sierra Leone', 'Comoros', 'Honduras', 'Antigua and Barbuda', 'Suriname', 'Haiti', 'Sint Maarten', 'Antarctica', 'Saint Barthélemy', 'Western Sahara', 'Andorra', 'Netherlands', 'Mayotte', 'Bermuda',
+    'Lesotho', 'Pitcairn Islands', 'Guadeloupe', 'Turkmenistan', 'Saint Martin', 'Benin', 'Peru', 'Bahamas', 'Malta', 'Burundi', 'Palau', 'Saint Vincent and the Grenadines', 'Oman', 'Ukraine', 'Réunion',
+    'Turkey', 'France', 'Hong Kong', 'Sudan', 'Armenia', 'Argentina', 'French Guiana', 'British Virgin Islands', 'Jersey', 'Seychelles', 'Gabon', 'Nepal', 'Kuwait', 'Tokelau',
+];
 
 let photosReady = 0;
 /** Google places API object */
