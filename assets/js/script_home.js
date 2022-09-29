@@ -45,6 +45,10 @@ function getPlaceInfo(placeId, photoEl) {
     function callback(place, status) {
         // Make sure a valid response was received
         if (status == google.maps.places.PlacesServiceStatus.OK) {
+            // If the place has no photos, get a new random place
+            if(place.photos == null) {
+                return randomPlace(photoEl);
+            }
             // Use first photo of the place
             const imgUrl = (place.photos[0].getUrl());
             // Attach image to photo element
@@ -151,10 +155,10 @@ async function randomPlace(photoEl1) {
 const citiesAPIUrl = 'https://api.teleport.org/api/cities/';
 
 /**
- * Get a list of city names in a provided country
- * @param {string} country The country to get the cities for
- * @returns The list of cities in the country
- */
+* Get a list of city names in a provided country
+* @param {string} country The country to get the cities for
+* @returns The list of cities in the country
+*/
 async function getCitiesForCountry(country) {
     const data = await fetch (`${citiesAPIUrl}?search=${country}`)
     .then(function (response) { return response.json(); })
