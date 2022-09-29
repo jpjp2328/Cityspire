@@ -10,7 +10,6 @@ let map;
 const openWeatherMapKey = '2c4a921d55c896205bdca23294d0393d';
 const googleKey = 'AIzaSyA2SZRWK-idQmJ5RiyvTjZsGzLhm3W_XAg'
 
-
 function initCarousel() {
   placesService = new google.maps.places.PlacesService(document.createElement('div'));
   // This must be called only once the google library is ready
