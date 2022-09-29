@@ -10,10 +10,34 @@ let map;
 const openWeatherMapKey = '2c4a921d55c896205bdca23294d0393d';
 const googleKey = 'AIzaSyA2SZRWK-idQmJ5RiyvTjZsGzLhm3W_XAg'
 
+function initAutocomplete() {
+  const input = document.getElementById("city-search");
+  
+  const options = {
+      fields: ["name"],
+      strictBounds: false,
+      // Only show cities
+      types: ["(cities)"]
+  };
+  
+  // Connect search bar to the autocomplete API
+  const autocomplete = new google.maps.places.Autocomplete(input, options);
+  
+  // Trigger function when the text is clicked
+  autocomplete.addListener("place_changed", () => {
+      
+      const place = autocomplete.getPlace();
+      // Redirect to the details page of the place the user selected
+      // Replace spaces in place name so content page can load information
+      document.location = `content.html?location=${place.name.replace(/ /g,',')}`;
+  });
+}
+
 function initCarousel() {
   placesService = new google.maps.places.PlacesService(document.createElement('div'));
   // This must be called only once the google library is ready
   findPlaceForCarousel(locationName);
+  initAutocomplete();
 }
 
 function getPlaceInfoForCarousel(placeId) {
