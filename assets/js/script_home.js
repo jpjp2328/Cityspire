@@ -1,3 +1,10 @@
+// Countries to exclude from the homepage images (they have bugs/don't load)
+const ignorePlaces = [
+    'Latvia', 'Venezuela', 'Eswatini', 'Heard Island and McDonald Islands', 'Mali', 'United States Minor Outlying Islands', 'Vietnam', 'North Macedonia', 'Panama', 'United States Virgin Islands', 'Kuwait', 'Tokelau',
+    'Saint Helena, Ascension and Tristan da Cunha', 'Algeria', 'Guam', 'British Indian Ocean Territory', 'Slovakia', 'Jordan', 'Guinea',  'French Polynesia', 'Philippines', 'Chile', 'Bouvet Island', 'Libya',
+    'North Korea', 'Turks and Caicos Islands', 'Equatorial Guinea', 'Faroe Islands', 'Bosnia and Herzegovina'];
+
+let photosReady = 0;
 /** Google places API object */
 let placesService;
 // Fill out city name in search bar when you begin typing
@@ -25,8 +32,22 @@ function initAutocomplete() {
     
     placesService = new google.maps.places.PlacesService(document.createElement('div'));
     
+    const photo1 = document.getElementById('home-photo1');
+    const photo2 = document.getElementById('home-photo2');
+    const photo3 = document.getElementById('home-photo3');
     // Display 3 random destinations when the page loads
-    randomPlaces(document.getElementById('home-photo1'), document.getElementById('home-photo2'), document.getElementById('home-photo3'));
+    randomPlaces(photo1, photo2, photo3);
+    
+    // Check every 100ms if all images have been loaded
+    let photoInterval = setInterval(function() {
+        if(photosReady < 3) { return; }
+        if(photo1.complete && photo2.complete && photo3.complete) {
+            // Show image container if all images have loaded
+            document.getElementById('home-photos').classList.remove('opacity-0');
+            // Stop checking if images have loaded
+            clearInterval(photoInterval);
+        }
+    }, 100)
 }
 
 /**
@@ -59,6 +80,8 @@ function getPlaceInfo(placeId, photoEl) {
             photoEl.onclick = function() {
                 document.location = `content.html?location=${place.name}`
             }
+            // Increment the number of photos that have loaded
+            photosReady++;
         }
     }
     // Request place details from Google API
@@ -115,7 +138,7 @@ async function getCountryList() {
             localStorage.setItem('countryList', JSON.stringify(countryList));
         });
     }
-    return countryList;
+    return countryList.filter((country)=> !ignorePlaces.includes(country));
 }
 
 /**

@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Kanit&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/style.css"/>
   <script src="./assets/js/script_home.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDazx2hF2PYMdxSCKhpndTIyThlgzfU65U&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy0UhmIiNGDGMyC8fKtCI-E2Myhq9Xn3E&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
   <title>Cityspire</title>
 </head>
 
@@ -59,10 +59,10 @@
           <button id="closeBtn" class="px-5 py-2 bg-indigo-500 hover:bg-indigo-700 text-white cursor-pointer rounded-md">Close</button>
         </div>
       </div>
-      
     </div>
-    <!-- Create a flex with the images inside in a row -->
-    <div class="flex flex-wrap w-full h-[35vh] justify-center content-center">
+
+    <!-- Create a flex with the images inside in a row and add a fade in effect -->
+    <div id="home-photos" class="flex flex-wrap w-full h-[35vh] justify-center content-center opacity-0 transition-opacity duration-1000">
       <!-- Add a hover effect to the image and disable selecting it -->
       <div class="hover:drop-shadow-[0_10px_10px_rgba(0,0,0,0.2)] w-64 select-none">
         <img id="home-photo1" class="object-cover w-64 h-64" src="./assets/images/placeholder.jpg" alt="Image of random city"/>
